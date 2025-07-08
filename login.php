@@ -13,7 +13,7 @@ if (isset($_SESSION['admin_id'])) {
 
 // Handle login form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_once 'config/database.php';
+    require_once 'config/database.php'; 
 
     $email = $_POST['email'];
     $password = $_POST['password'];

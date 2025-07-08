@@ -1,5 +1,26 @@
+<?php
+session_start();
+require_once '../config/database.php';
+// تعداد کاربران
+$user_count = 0;
+$res = $conn->query("SELECT COUNT(*) as cnt FROM users");
+if ($row = $res->fetch_assoc()) $user_count = $row['cnt'];
+// تعداد محصولات
+$product_count = 0;
+$res = $conn->query("SELECT COUNT(*) as cnt FROM products");
+if ($row = $res->fetch_assoc()) $product_count = $row['cnt'];
+// تعداد سفارشات
+$order_count = 0;
+$res = $conn->query("SELECT COUNT(*) as cnt FROM orders");
+if ($row = $res->fetch_assoc()) $order_count = $row['cnt'];
+// تعداد پیام‌ها
+$message_count = 0;
+$res = $conn->query("SELECT COUNT(*) as cnt FROM messages");
+if ($row = $res->fetch_assoc()) $message_count = $row['cnt'];
+?>
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,29 +38,37 @@
             font-family: 'Vazirmatn', sans-serif;
             background: #f8f9fa;
         }
+
         .admin-header {
             background: linear-gradient(90deg, #388e3c 0%, #43a047 100%);
             color: #fff;
             padding: 1rem 0;
             box-shadow: 0 2px 8px rgba(60, 60, 60, 0.08);
         }
+
         .admin-header .navbar-brand {
             font-weight: bold;
             font-size: 1.5rem;
             color: #fff;
         }
-        .admin-header .nav-link, .admin-header .nav-link:visited {
+
+        .admin-header .nav-link,
+        .admin-header .nav-link:visited {
             color: #e0f2f1;
             font-size: 1.1rem;
             margin-left: 1rem;
         }
-        .admin-header .nav-link.active, .admin-header .nav-link:hover {
+
+        .admin-header .nav-link.active,
+        .admin-header .nav-link:hover {
             color: #ffd600;
             font-weight: bold;
         }
+
         .admin-dashboard {
             padding: 2rem 0;
         }
+
         .stat-card {
             border-radius: 16px;
             box-shadow: 0 4px 16px rgba(60, 60, 60, 0.08);
@@ -48,21 +77,25 @@
             text-align: center;
             margin-bottom: 2rem;
         }
+
         .stat-card .icon {
             font-size: 2.5rem;
             color: #43a047;
             margin-bottom: 1rem;
         }
+
         .stat-card .stat-title {
             font-size: 1.1rem;
             color: #388e3c;
             margin-bottom: 0.5rem;
         }
+
         .stat-card .stat-value {
             font-size: 2rem;
             font-weight: bold;
             color: #222;
         }
+
         .admin-footer {
             background: linear-gradient(90deg, #388e3c 0%, #43a047 100%);
             color: #fff;
@@ -72,6 +105,7 @@
             padding: 1.5rem 0 1rem 0;
             text-align: center;
         }
+
         @media (max-width: 768px) {
             .stat-card {
                 padding: 1.2rem 0.5rem;
@@ -79,6 +113,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Admin Header -->
     <nav class="navbar navbar-expand-lg admin-header">
@@ -108,28 +143,28 @@
                 <div class="stat-card">
                     <div class="icon"><i class="fas fa-users"></i></div>
                     <div class="stat-title">تعداد کاربران</div>
-                    <div class="stat-value">۱۲۳</div>
+                    <div class="stat-value"><?php echo $user_count; ?></div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-card">
                     <div class="icon"><i class="fas fa-leaf"></i></div>
                     <div class="stat-title">تعداد محصولات</div>
-                    <div class="stat-value">۴۵</div>
+                    <div class="stat-value"><?php echo $product_count; ?></div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-card">
                     <div class="icon"><i class="fas fa-shopping-cart"></i></div>
                     <div class="stat-title">تعداد سفارشات</div>
-                    <div class="stat-value">۳۲</div>
+                    <div class="stat-value"><?php echo $order_count; ?></div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-card">
                     <div class="icon"><i class="fas fa-envelope"></i></div>
                     <div class="stat-title">پیام‌های جدید</div>
-                    <div class="stat-value">۵</div>
+                    <div class="stat-value"><?php echo $message_count; ?></div>
                 </div>
             </div>
         </div>
@@ -154,6 +189,9 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>AOS.init();</script>
+    <script>
+        AOS.init();
+    </script>
 </body>
-</html> 
+
+</html>
